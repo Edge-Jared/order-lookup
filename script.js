@@ -36,13 +36,13 @@ const partners = {
     changenow: {
         name: 'ChangeNow',
         pattern: /^[a-zA-Z0-9]{14}$/,
-        url: 'https://changenow.io/exchange/',
+        url: 'https://changenow.io/exchange/txs/',
         description: 'Cryptocurrency exchange service'
     },
     letsexchange: {
         name: 'LetsExchange',
         pattern: /^[a-zA-Z0-9]{14}$/,
-        url: 'https://letsexchange.io/exchange/',
+        url: 'https://letsexchange.io/?transactionId=',
         description: 'Cryptocurrency exchange service'
     },
     bity: {
@@ -195,6 +195,16 @@ function findMatchingPartners(orderId) {
     return matches;
 }
 
+/**
+ * This is only used to count the number of times a provider is clicked.
+ * The purpose is to know which provider is the most problematic based on this tool usage.
+ * It is not used to track the order status or anything else about the user.
+ * @param {string} provider 
+ */
+async function countProviderClick(provider) {
+    await fetch(`https://provider-order-problem-traccking.edge.com/v1/order-lookup/count-provider-click?provider=${provider}`)
+}
+
 // Display cryptocurrency transaction
 function displayCryptoTransaction(cryptoTx, txId) {
     resultsContent.innerHTML = `
@@ -278,7 +288,7 @@ function displayResults(results, orderId) {
                 <div class="result-content">
                     <div class="result-title">${result.name}</div>
                     <div class="result-description">${result.description}</div>
-                    <a href="${link}" target="_blank" rel="noopener noreferrer" class="result-link">
+                    <a href="${link}" target="_blank" rel="noopener noreferrer" class="result-link" onclick="countProviderClick('${result.key}')">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                             <polyline points="15,3 21,3 21,9"></polyline>

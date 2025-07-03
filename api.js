@@ -36,13 +36,13 @@ const partners = {
     changenow: {
         name: 'ChangeNow',
         pattern: /^[a-zA-Z0-9]{14}$/,
-        url: 'https://changenow.io/exchange/',
+        url: 'https://changenow.io/exchange/txs/',
         description: 'Cryptocurrency exchange service'
     },
     letsexchange: {
         name: 'LetsExchange',
         pattern: /^[a-zA-Z0-9]{14}$/,
-        url: 'https://letsexchange.io/exchange/',
+        url: 'https://letsexchange.io/?transactionId=',
         description: 'Cryptocurrency exchange service'
     },
     bity: {
